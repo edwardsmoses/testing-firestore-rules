@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@firebase/testing": "^0.20.11",
+    "jest": "^29.0.2"
+  }
 }
