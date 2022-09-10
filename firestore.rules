@@ -4,5 +4,24 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated(); 
+      allow write: if isAuthenticated() && request.auth.uid == userId
+    }
+
+    match /posts/{postId} {
+      allow read: if isAuthenticated(); 
+      allow write: if isAuthenticated() && debug(request.auth.uid) == request.resource.data.written_by
+      allow write: if isAuthenticated() && isAdmin()
+    }
+
+    function isAuthenticated() {
+        return request.auth != null;
+    }
+
+    function isAdmin() {
+      return request.auth.token.admin == true;
+    }
   }
 }
